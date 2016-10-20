@@ -1,5 +1,5 @@
-import sys
-sys.path.append('../../python')
+#import sys
+#sys.path.append('../../python')
 
 import caffe
 from caffe import layers as L, params as P
@@ -39,9 +39,9 @@ def fcn(split):
     n.pool5 = max_pool(n.relu5, 3, stride=2)
 
     # fully conv
-    n.fc6, n.relu6 = conv_relu(n.pool5, 6, 4096)
+    n.fc6_ft, n.relu6 = conv_relu(n.pool5, 6, 4096)
     n.drop6 = L.Dropout(n.relu6, dropout_ratio=0.5, in_place=True)
-    n.fc7, n.relu7 = conv_relu(n.drop6, 1, 4096)
+    n.fc7_ft, n.relu7 = conv_relu(n.drop6, 1, 4096)
     n.drop7 = L.Dropout(n.relu7, dropout_ratio=0.5, in_place=True)
 
     n.score_fr = L.Convolution(n.drop7, num_output=21, kernel_size=1, pad=0,
